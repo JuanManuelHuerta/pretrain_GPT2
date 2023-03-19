@@ -1,0 +1,8 @@
+from datasets import load_dataset, DownloadConfig
+import psutil, os
+
+
+
+download_config = DownloadConfig(delete_extracted=True)
+
+
