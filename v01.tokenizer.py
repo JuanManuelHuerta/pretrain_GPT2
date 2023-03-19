@@ -47,17 +47,17 @@ print(f'First element: `{base_vocab[0]}`, last element: `{base_vocab[-1]}`')
 
 ## This is done in the CPU
 
-length = 8000
+length = 100000
 dataset_name = 'transformersbook/codeparrot-train'
 dataset = load_dataset(dataset_name, split="train", streaming=True)
 iter_dataset = iter(dataset)
 
-def batch_iterator(batch_size=20):
+def batch_iterator(batch_size=10):
     for _ in tqdm(range(0, length, batch_size)):
         yield [next(iter_dataset)['content'] for _ in range(batch_size)]
 
 new_tokenizer = tokenizer.train_new_from_iterator(batch_iterator(), 
-                                                  vocab_size=35000,
+                                                  vocab_size=32000,
                                                   initial_alphabet=base_vocab)
 print(new_tokenizer(python_code).tokens())
 
@@ -68,3 +68,9 @@ print(f'There are in total {len(keyword.kwlist)} Python keywords.')
 for keyw in keyword.kwlist:
     if keyw not in new_tokenizer.vocab:
         print(f'No, keyword `{keyw}` is not in the vocabulary')
+
+
+model_ckpt = "codeparrot"
+org = ""
+new_tokenizer_larger.push_to_hub(model_ckpt, organization=org)
+
