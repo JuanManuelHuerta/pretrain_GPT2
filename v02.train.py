@@ -146,7 +146,7 @@ def evaluate():
 
 org="jmhuerta"
 model_ckpt = "codeparrot"
-
+dataset_name = 'transformersbook/codeparrot'
 
 tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
 config = AutoConfig.from_pretrained("gpt2", vocab_size=len(tokenizer),gradient_checkpointing= True,)
